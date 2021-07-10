@@ -24,6 +24,13 @@ vector<float>  jetRawPt_;
 vector<float>  jetRawEn_;
 vector<float>  jetMt_;
 vector<float>  jetArea_;
+vector<float> jetMass_; //defined by me
+vector<float> jetPx_; //defined by me
+vector<float> jetPy_; //defined by me
+vector<float> jetPz_; //defined by me
+vector<float> jetJERSmearing_; //defined by me
+vector<float> jetJERSmearingUp_; //defined by me
+vector<float> jetJERSmearingDown_; //defined by me
 vector<float>  jetLeadTrackPt_;
 vector<float>  jetLeadTrackEta_;
 vector<float>  jetLeadTrackPhi_;
@@ -85,6 +92,13 @@ void ggNtuplizer::branchesJets(TTree* tree) {
   tree->Branch("jetRawEn",            &jetRawEn_);
   tree->Branch("jetMt",               &jetMt_);
   tree->Branch("jetArea",             &jetArea_);
+  tree->Branch("jetPx",           &jetPx_);   //added by me
+  tree->Branch("jetPy",           &jetPy_);    //
+  tree->Branch("jetPz",           &jetPz_);    //
+  tree->Branch("jetMass",         &jetMass_);   //
+  tree->Branch("jetJERSmearing",    &jetJERSmearing_); //
+  tree->Branch("jetJERSmearingUp",    &jetJERSmearingUp_);//
+  tree->Branch("jetJERSmearingDown",    &jetJERSmearingDown_);//added till
   tree->Branch("jetLeadTrackPt",      &jetLeadTrackPt_);
   tree->Branch("jetLeadTrackEta",     &jetLeadTrackEta_);
   tree->Branch("jetLeadTrackPhi",     &jetLeadTrackPhi_);
@@ -132,10 +146,11 @@ void ggNtuplizer::branchesJets(TTree* tree) {
   tree->Branch("jetVtxNtrks",  &jetVtxNtrks_);
   tree->Branch("jetVtx3DVal",  &jetVtx3DVal_);
   tree->Branch("jetVtx3DSig",  &jetVtx3DSig_);
+  tree->Branch("jetNConstituents", &jetNConstituents_); 
   if (development_) {
     tree->Branch("jetHFHAE",         &jetHFHAE_);
     tree->Branch("jetHFEME",         &jetHFEME_);
-    tree->Branch("jetNConstituents", &jetNConstituents_);
+ //   tree->Branch("jetNConstituents", &jetNConstituents_);
   }
 
 }
@@ -150,6 +165,13 @@ void ggNtuplizer::fillJets(const edm::Event& e, const edm::EventSetup& es) {
   jetRawEn_                               .clear();
   jetMt_                                  .clear();
   jetArea_                                .clear();
+  jetMass_                                .clear(); //added by me
+  jetPx_                                  .clear();
+  jetPy_                                  .clear();
+  jetPz_                                  .clear();
+  jetJERSmearing_                         .clear();
+  jetJERSmearingUp_                       .clear();
+  jetJERSmearingDown_                     .clear();  //added till here  
   jetLeadTrackPt_                         .clear();
   jetLeadTrackEta_                        .clear();
   jetLeadTrackPhi_                        .clear();
@@ -185,10 +207,11 @@ void ggNtuplizer::fillJets(const edm::Event& e, const edm::EventSetup& es) {
   jetVtxNtrks_                            .clear();
   jetVtx3DVal_                            .clear();
   jetVtx3DSig_                            .clear();
+  jetNConstituents_                       .clear(); 
   if (development_) {
     jetHFHAE_                               .clear();
     jetHFEME_                               .clear();
-    jetNConstituents_                       .clear();
+  //  jetNConstituents_                       .clear();
   }
   jetGenJetEn_.clear();
   jetGenJetPt_.clear();
@@ -236,6 +259,10 @@ void ggNtuplizer::fillJets(const edm::Event& e, const edm::EventSetup& es) {
     jetEn_.push_back(    iJet->energy());
     jetEta_.push_back(   iJet->eta());
     jetPhi_.push_back(   iJet->phi());
+    jetMass_.push_back(  iJet->mass() ); //added by me 
+    jetPx_.push_back(    iJet->px());
+    jetPy_.push_back(    iJet->py());
+    jetPz_.push_back(    iJet->pz());  //till here    
     jetRawPt_.push_back( (*iJet).correctedJet("Uncorrected").pt());
     jetRawEn_.push_back( (*iJet).correctedJet("Uncorrected").energy());
     jetMt_.push_back(    iJet->mt());
@@ -247,10 +274,11 @@ void ggNtuplizer::fillJets(const edm::Event& e, const edm::EventSetup& es) {
     jetNCH_.push_back(   iJet->chargedMultiplicity());
     jetNNP_.push_back(   iJet->neutralMultiplicity());
     jetMUF_.push_back(   iJet->muonEnergyFraction());
+    jetNConstituents_.push_back(iJet->numberOfDaughters());  
     if (development_) {
       jetHFHAE_.push_back( iJet->HFHadronEnergy());
       jetHFEME_.push_back( iJet->HFEMEnergy());
-      jetNConstituents_.push_back(iJet->numberOfDaughters());
+   //   jetNConstituents_.push_back(iJet->numberOfDaughters());
     }
 
     if (fabs(iJet->eta()) < 5.2) {

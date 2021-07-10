@@ -76,8 +76,10 @@ void ggNtuplizer::fillMET(const edm::Event& e, const edm::EventSetup& es) {
       "Flag_eeBadScFilter",
       "Flag_EcalDeadCellTriggerPrimitiveFilter",
       "Flag_BadPFMuonFilter",
-      "Flag_ecalBadCalibReducedMINIAODFilter",
-      "Flag_BadChargedCandidateFilter"
+      "Flag_BadPFMuonDzFilter",     //added for UL2017&2018
+      "Flag_ecalBadCalibFilter",     //added for UL2017&2018
+      //"Flag_ecalBadCalibReducedMINIAODFilter",//not reccomended 
+     // "Flag_BadChargedCandidateFilter"//not reccomended now
     };
 
     edm::Handle<edm::TriggerResults> patFilterResultsHandle;

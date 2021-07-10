@@ -17,6 +17,7 @@ vector<int>    eleChargeConsistent_;
 vector<float>  eleEn_;
 vector<float>  eleSCEn_;
 vector<float>  eleEcalEn_;
+vector<float>  eleESEn_;//added
 vector<float>  eleESEnP1_;
 vector<float>  eleESEnP2_;
 vector<float>  eleESEnP1Raw_;
@@ -54,6 +55,25 @@ vector<float>  elePFNeuIso_;
 vector<float>  elePFPUIso_;
 vector<float>  elePFClusEcalIso_;
 vector<float>  elePFClusHcalIso_;
+vector<float>  elecaloEnergy_; //added by me
+vector<float>  elePFMiniIso_; //added by me
+vector<float>  eleIDMVA_;//added
+vector<float>  eleIDMVAHZZ_;//added
+vector<float>  eledEtaseedAtVtx_;//added
+vector<float>  eleE1x5_;//added
+vector<float>  eleE2x5_;//added
+vector<float>  eleE5x5_;//added
+vector<float>  eleE1x5Full5x5_;//added
+vector<float>  eleE2x5Full5x5_;//added
+vector<float>  eleE5x5Full5x5_;//added
+vector<float>  eleDr03EcalRecHitSumEt_;//added
+vector<float>  eleDr03HcalDepth1TowerSumEt_;//added
+vector<float>  eleDr03HcalDepth2TowerSumEt_;//added
+vector<float>  eleDr03HcalTowerSumEt_;//added
+vector<float>  eleDr03TkSumPt_;//added till here
+vector<vector<float> > eleBCEn_;//added
+vector<vector<float> > eleBCEta_;//added
+vector<vector<float> > eleBCPhi_;//added
 vector<float>  eleIDMVAIso_;
 vector<float>  eleIDMVANoIso_;
 vector<float>  eleR9Full5x5_;
@@ -110,6 +130,7 @@ void ggNtuplizer::branchesElectrons(TTree* tree) {
   tree->Branch("eleEn",                   &eleEn_);
   tree->Branch("eleSCEn",                 &eleSCEn_);
   tree->Branch("eleEcalEn",               &eleEcalEn_);
+  tree->Branch("eleESEn",                 &eleESEn_);//added
   tree->Branch("eleESEnP1",               &eleESEnP1_);
   tree->Branch("eleESEnP2",               &eleESEnP2_);
   tree->Branch("eleD0",                   &eleD0_);
@@ -145,6 +166,25 @@ void ggNtuplizer::branchesElectrons(TTree* tree) {
   tree->Branch("elePFPUIso",              &elePFPUIso_);
   tree->Branch("elePFClusEcalIso",        &elePFClusEcalIso_);
   tree->Branch("elePFClusHcalIso",        &elePFClusHcalIso_);
+  tree->Branch("eleIDMVA",                &eleIDMVA_);//added
+  tree->Branch("eleIDMVAHZZ",             &eleIDMVAHZZ_);//added
+  tree->Branch("eledEtaseedAtVtx",        &eledEtaseedAtVtx_);//added
+  tree->Branch("eleE1x5",                 &eleE1x5_);//added
+  tree->Branch("eleE2x5",                 &eleE2x5_);//added
+  tree->Branch("eleE5x5",                 &eleE5x5_);//added
+  tree->Branch("eleE1x5Full5x5",          &eleE1x5Full5x5_);//added by me
+  tree->Branch("eleE2x5Full5x5",          &eleE2x5Full5x5_);//added
+  tree->Branch("eleE5x5Full5x5",          &eleE5x5Full5x5_);//added
+  tree->Branch("eleDr03EcalRecHitSumEt",      &eleDr03EcalRecHitSumEt_);//added
+  tree->Branch("eleDr03HcalDepth1TowerSumEt", &eleDr03HcalDepth1TowerSumEt_);//added
+  tree->Branch("eleDr03HcalDepth2TowerSumEt", &eleDr03HcalDepth2TowerSumEt_);//added
+  tree->Branch("eleDr03HcalTowerSumEt",       &eleDr03HcalTowerSumEt_);//added
+  tree->Branch("eleDr03TkSumPt",              &eleDr03TkSumPt_);  //added
+  tree->Branch("elecaloEnergy",               &elecaloEnergy_);//added by me
+  tree->Branch("elePFMiniIso",            &elePFMiniIso_); //added by me
+  tree->Branch("eleBCEn",                     &eleBCEn_);//added
+  tree->Branch("eleBCEta",                    &eleBCEta_);//added
+  tree->Branch("eleBCPhi",                    &eleBCPhi_);//added
   tree->Branch("eleIDMVAIso",             &eleIDMVAIso_);
   tree->Branch("eleIDMVANoIso",           &eleIDMVANoIso_);
   tree->Branch("eleR9Full5x5",                &eleR9Full5x5_);
@@ -205,6 +245,7 @@ void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, 
   eleEn_                      .clear();
   eleSCEn_                    .clear();
   eleEcalEn_                  .clear();
+  eleESEn_                    .clear(); //added
   eleESEnP1_                  .clear();
   eleESEnP2_                  .clear();
   eleESEnP1Raw_               .clear();
@@ -250,6 +291,25 @@ void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, 
   elePFPUIso_                 .clear();
   elePFClusEcalIso_           .clear();
   elePFClusHcalIso_           .clear();
+  eleIDMVA_                   .clear();//added
+  eleIDMVAHZZ_                .clear();//added
+  eledEtaseedAtVtx_           .clear();//added
+  eleE1x5_                    .clear();//added
+  eleE2x5_                    .clear();//added
+  eleE5x5_                    .clear(); //added
+  eleE1x5Full5x5_             .clear(); //added
+  eleE2x5Full5x5_             .clear();//added
+  eleE5x5Full5x5_             .clear();//added
+  eleDr03EcalRecHitSumEt_     .clear();//added
+  eleDr03HcalDepth1TowerSumEt_.clear();//added
+  eleDr03HcalDepth2TowerSumEt_.clear();//added
+  eleDr03HcalTowerSumEt_      .clear();//added
+  eleDr03TkSumPt_             .clear(); //added
+  elecaloEnergy_              .clear();//added by me
+  elePFMiniIso_               .clear();//added by me
+  eleBCEn_                    .clear();//added
+  eleBCEta_                   .clear();//added
+  eleBCPhi_                   .clear();//added 
   eleIDMVAIso_                .clear();
   eleIDMVANoIso_              .clear();
   eleEcalDrivenSeed_          .clear();
@@ -319,6 +379,7 @@ void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, 
     eleR9_              .push_back(iEle->r9());
     eleSCEn_            .push_back(iEle->superCluster()->energy());
     eleEcalEn_          .push_back(iEle->ecalEnergy());
+    eleESEn_            .push_back(iEle->superCluster()->preshowerEnergy());//added   
     eleESEnP1_          .push_back(iEle->superCluster()->preshowerEnergyPlane1());
     eleESEnP2_          .push_back(iEle->superCluster()->preshowerEnergyPlane2());
     eleSCEta_           .push_back(iEle->superCluster()->eta());
@@ -346,18 +407,36 @@ void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, 
     if (iEle->ecalEnergy() == 0)   eleEoverPInv_.push_back(1e30);
     else if (!std::isfinite(iEle->ecalEnergy()))  eleEoverPInv_.push_back(1e30);
     else  eleEoverPInv_.push_back((1.0 - iEle->eSuperClusterOverP())/iEle->ecalEnergy());
+       //added from here
+    double eledEtaseedAtVtx = iEle->superCluster().isNonnull() && iEle->superCluster()->seed().isNonnull() ?
+      iEle->deltaEtaSuperClusterTrackAtVtx() - iEle->superCluster()->eta() + iEle->superCluster()->seed()->eta() : std::numeric_limits<float>::max();
+
+    eledEtaseedAtVtx_   .push_back(eledEtaseedAtVtx);
+    eleE1x5_            .push_back(iEle->e1x5());
+    eleE2x5_            .push_back(iEle->e2x5Max());
+    eleE5x5_            .push_back(iEle->e5x5());    //added till here
 
     reco::GsfElectron::PflowIsolationVariables pfIso = iEle->pfIsolationVariables();
     elePFChIso_         .push_back(pfIso.sumChargedHadronPt);
     elePFPhoIso_        .push_back(pfIso.sumPhotonEt);
     elePFNeuIso_        .push_back(pfIso.sumNeutralHadronEt);
     elePFPUIso_         .push_back(pfIso.sumPUPt);
+    elecaloEnergy_      .push_back(iEle->caloEnergy());    //added
+    elePFMiniIso_       .push_back(getMiniIsolation(pfcands, dynamic_cast<const reco::Candidate *>(&(*iEle)), 0.05, 0.2, 10., false));//added
 
     eleSigmaIEtaIEtaFull5x5_.push_back(iEle->full5x5_sigmaIetaIeta());
     eleSigmaIPhiIPhiFull5x5_.push_back(iEle->full5x5_sigmaIphiIphi());
     eleR9Full5x5_           .push_back(iEle->full5x5_r9());
     eleEcalDrivenSeed_      .push_back(iEle->ecalDrivenSeed());
-    
+    eleE1x5Full5x5_             .push_back(iEle->full5x5_e1x5());  //added
+    eleE2x5Full5x5_             .push_back(iEle->full5x5_e2x5Max()); //added
+    eleE5x5Full5x5_             .push_back(iEle->full5x5_e5x5()); //added
+    eleDr03EcalRecHitSumEt_     .push_back(iEle->dr03EcalRecHitSumEt()); //added
+    eleDr03HcalDepth1TowerSumEt_.push_back(iEle->dr03HcalDepth1TowerSumEt());//added
+    eleDr03HcalDepth2TowerSumEt_.push_back(iEle->dr03HcalDepth2TowerSumEt());//added
+    eleDr03HcalTowerSumEt_      .push_back(iEle->dr03HcalTowerSumEt());//added
+    eleDr03TkSumPt_             .push_back(iEle->dr03TkSumPt());//added    
+
     eleScale_stat_up_.push_back(iEle->userFloat("energyScaleStatUp"));
     eleScale_stat_dn_.push_back(iEle->userFloat("energyScaleStatDown"));
     eleScale_syst_up_.push_back(iEle->userFloat("energyScaleSystUp"));
@@ -443,7 +522,9 @@ void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, 
     if (isPassTight)  setbit(tmpeleIDbit, 3);    
     bool isPassHEEP   = iEle->electronID("heepElectronID-HEEPV70");
     if (isPassHEEP)   setbit(tmpeleIDbit, 4);
-    
+   
+    eleIDMVA_ .push_back(iEle->userFloat("ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"));//added
+    eleIDMVAHZZ_ .push_back(iEle->userFloat("ElectronMVAEstimatorRun2Spring16HZZV1Values")); //added
     eleIDMVAIso_  .push_back(iEle->userFloat("ElectronMVAEstimatorRun2Fall17IsoV2Values"));
     eleIDMVANoIso_.push_back(iEle->userFloat("ElectronMVAEstimatorRun2Fall17NoIsoV2Values"));
 
