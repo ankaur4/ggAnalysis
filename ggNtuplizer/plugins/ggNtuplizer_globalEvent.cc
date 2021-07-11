@@ -440,8 +440,8 @@ void ggNtuplizer::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es
       HLTJetIsPrescaled_ |= (isPrescaled << bitJet);
     }
 
-    if (name.find("HLT_IsoMu24_v") == string::npos) 
-    cout<<"HLT : "<< i <<" "<<HLT_IsoMu24_v<<" "<<isPrescaled<<" "<<isFired<<endl;
+   // if (name.find("HLT_IsoMu24_v") == string::npos) 
+  //  cout<<"HLT : "<< HLT_IsoMu24_v <<" "<<isPrescaled<<" "<<isFired<<endl;
 
     if (!doGenParticles_) {
       /* to be fixed as this only works for 2017
